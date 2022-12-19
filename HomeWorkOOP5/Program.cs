@@ -33,13 +33,13 @@
                         reader.AddBook(storage);
                         break;
                     case CommandShowAllBooks:
-                        storage.ShowAllBooks();
+                        storage.ShowAll();
                         break;
                     case CommandDeleteBook:
-                        storage.RemoveBook();
+                        storage.Remove();
                         break;
                     case CommandShowBooksByParametr:
-
+                        storage.ShowByParametr();
                         break;
                     case CommandExit:
                         isProgramOn = false;
@@ -51,6 +51,12 @@
 
     class Books
     {
+        public int Id { get; private set; }
+        public string Title { get; private set; }
+        public string Genre { get; private set; }
+        public int Year { get; private set; }
+        public string Author { get; private set; }
+
         public Books(int id, string title, string author, string genre, int year)
         {
             Id = id;
@@ -59,19 +65,23 @@
             Genre = genre;
             Year = year;
         }
-
-        public int Id { get; private set; }
-        public string Title { get; private set; }
-        public string Genre { get; private set; }
-        public int Year { get; private set; }
-        public string Author { get; private set; }
     }
 
     class Storage
     {
-        public List<Books> _books { get; private set; } = new List<Books> { new Books(1, "На Западном фронте без перемен", "Эрих Мария Ремарк", "Роман", 1929) };
+        private string _title = "1";
+        private string _author = "2";
+        private string _genre = "3";
+        private string _year = "4";
 
-        public void ShowAllBooks()
+        public List<Books> _books { get; private set; } = new();
+
+        public Storage()
+        {
+            _books.Add(new Books(1, "На Западном фронте без перемен", "Эрих Мария Ремарк", "Роман", 1929));
+        }
+
+        public void ShowAll()
         {
             Console.Clear();
             Console.WriteLine("Книги: ");
@@ -115,12 +125,13 @@
             }
         }
         
-        public void RemoveBook()
+        public void Remove()
         {
-            if(TryGetBook(out Books? books))
+            if(TryGetBook(out Books? book))
             {
-                _books.Remove(books);
+                _books.Remove(book);
                 Console.WriteLine("Книга удалена");
+                Console.ReadKey();
             }
             else
             {
@@ -128,18 +139,102 @@
             }
         }
 
-        public void 
+        public void ShowByParametr()
+        {
+            Console.WriteLine($"Выберите параметр: \n{_title}Название\n{_author}Автор\n{_genre}Жанр\n{_year}Год");
+
+            string? userInput = Console.ReadLine();
+   
+            Console.WriteLine("Введите значение: ");
+
+            string? userInputForSearch = Console.ReadLine();
+
+            if (userInput == _title)
+            {
+                foreach (Books book in _books)
+                {
+                    if (userInputForSearch == book.Title)
+                    {
+                        Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");  
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                Console.ReadKey();
+            }
+            else if(userInput == _author)
+            {
+                foreach(Books book in _books)
+                {
+                    if(userInputForSearch == book.Author)
+                    {
+                        Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                Console.ReadKey();
+            }
+            else if (userInput == _genre)
+            {
+                foreach(Books book in _books)
+                {
+                    if(userInputForSearch == book.Genre)
+                    {
+                        Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                Console.ReadKey();
+            }
+            else if (userInput == _year)
+            {
+                bool isNumber = int.TryParse(userInputForSearch, out int userInputNumberForSearch);
+
+                if(isNumber)
+                {
+                    foreach (Books book in _books)
+                    {
+                        if (userInputNumberForSearch == book.Year)
+                        {
+                            Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка, нужно ввести число.");
+                }
+            }
+        }
     }
 
     class Reader
     {
+        private int _lastId = 1;
+
+        public string Name { get; private set; }
+        
         public Reader(string name)
         {
             Name = name;
         }
-
-        public string Name { get; private set; }
-        private int _lastId = 1;
 
         public void AddBook(Storage storage)
         {
