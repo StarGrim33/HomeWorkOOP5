@@ -11,13 +11,17 @@
             const string CommandExit = "5";
 
             bool isProgramOn = true;
-
-            Reader reader = new("Влад");
+            
+            Reader reader = new("Аноним");
             Storage storage = new();
+
+            Console.WriteLine("Здравствуйте, Как Вас зовут?: ");
+            reader.SetName();
 
             while (isProgramOn)
             {
                 Console.Clear();
+                Console.WriteLine($"Что Вас интересует, {reader.Name}? ");
                 Console.WriteLine($"Меню: ");
                 Console.WriteLine($"{CommandAddBook}-Добавить книгу");
                 Console.WriteLine($"{CommandShowAllBooks}-Показать книги");
@@ -30,7 +34,7 @@
                 switch (userInput)
                 {
                     case CommandAddBook:
-                        reader.AddBook(storage);
+                        storage.AddBook();
                         break;
                     case CommandShowAllBooks:
                         storage.ShowAll();
@@ -39,7 +43,7 @@
                         storage.Remove();
                         break;
                     case CommandShowBooksByParametr:
-                        storage.ShowByParametr();
+                        storage.ShowByParametrs();
                         break;
                     case CommandExit:
                         isProgramOn = false;
@@ -69,16 +73,135 @@
 
     class Storage
     {
+        private int _lastId = 1;
         private string _title = "1";
         private string _author = "2";
         private string _genre = "3";
         private string _year = "4";
 
-        public List<Books> _books { get; private set; } = new();
+        private List<Books> _books  = new();
 
         public Storage()
         {
             _books.Add(new Books(1, "На Западном фронте без перемен", "Эрих Мария Ремарк", "Роман", 1929));
+        }
+
+        private void ShowByTitle(string? userInput)
+        {
+            foreach (Books book in _books)
+            {
+                if (userInput == book.Title)
+                {
+                    Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        private void ShowByAuthor(string? userInput)
+        {
+            foreach (Books book in _books)
+            {
+                if (userInput == book.Author)
+                {
+                    Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        private void ShowByGenre(string? userInput)
+        {
+            foreach (Books book in _books)
+            {
+                if (userInput == book.Genre)
+                {
+                    Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        private void ShowByYear(string? userInput)
+        {
+            bool isNumber = int.TryParse(userInput, out int userInputNumberForSearch);
+
+            if (isNumber)
+            {
+                foreach (Books book in _books)
+                {
+                    if (userInputNumberForSearch == book.Year)
+                    {
+                        Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
+                    }
+                }
+
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("Ошибка, нужно ввести число.");
+            }
+        }
+
+        private bool TryGetBook(out Books? books)
+        {
+            books = null;
+
+            Console.WriteLine("Введите id книги: ");
+
+            if (int.TryParse(Console.ReadLine(), out int number))
+            {
+                for (int i = 0; i < _books.Count; i++)
+                {
+                    if (_books[i].Id == number)
+                    {
+                        books = _books[i];
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Книга не найдена");
+                        return false;
+                    }
+                }
+
+            }
+
+            return false;
+        }
+
+        public void AddBook()
+        {
+            int id = ++_lastId;
+            string? title;
+            string? author;
+            string? genre;
+            int year;
+
+            Console.WriteLine("Введите название книги: ");
+            title = Console.ReadLine();
+            Console.WriteLine("Введите автора: ");
+            author = Console.ReadLine();
+            Console.WriteLine("Введите жанр: ");
+            genre = Console.ReadLine();
+            Console.WriteLine("Введите год выхода книги: ");
+
+            bool isNumber = int.TryParse(Console.ReadLine(), out int number);
+
+            if (isNumber)
+            {
+                year = number;
+                _books.Add(new Books(id, title, author, genre, year));
+            }
+            else
+            {
+                Console.WriteLine("Нужно ввести число.");
+                Console.ReadKey();
+            }
         }
 
         public void ShowAll()
@@ -94,37 +217,6 @@
             Console.ReadKey();
         }
 
-        public bool TryGetBook(out Books? books)
-        {
-            books = null;
-
-            Console.WriteLine("Введите id книги: ");
-
-            if (int.TryParse(Console.ReadLine(), out int number))
-            {
-                for(int i = 0; i < _books.Count; i++)
-                {
-                    if (_books[i].Id == number)
-                    {
-                        books = _books[i];
-                        return true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Книга не найдена");
-                        return false;
-                    }
-                }
-                return false;
-            }
-            else
-            {
-                books = null;
-                Console.WriteLine("Ошибка");
-                return false;
-            }
-        }
-        
         public void Remove()
         {
             if(TryGetBook(out Books? book))
@@ -139,7 +231,7 @@
             }
         }
 
-        public void ShowByParametr()
+        public void ShowByParametrs()
         {
             Console.WriteLine($"Выберите параметр: \n{_title}Название\n{_author}Автор\n{_genre}Жанр\n{_year}Год");
 
@@ -151,109 +243,35 @@
 
             if (userInput == _title)
             {
-                foreach (Books book in _books)
-                {
-                    if (userInputForSearch == book.Title)
-                    {
-                        Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");  
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-
-                Console.ReadKey();
+                ShowByTitle(userInputForSearch);
             }
             else if(userInput == _author)
             {
-                foreach(Books book in _books)
-                {
-                    if(userInputForSearch == book.Author)
-                    {
-                        Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-
-                Console.ReadKey();
+                ShowByAuthor(userInputForSearch);
             }
             else if (userInput == _genre)
             {
-                foreach(Books book in _books)
-                {
-                    if(userInputForSearch == book.Genre)
-                    {
-                        Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-
-                Console.ReadKey();
+                ShowByGenre(userInputForSearch);
             }
             else if (userInput == _year)
             {
-                bool isNumber = int.TryParse(userInputForSearch, out int userInputNumberForSearch);
-
-                if(isNumber)
-                {
-                    foreach (Books book in _books)
-                    {
-                        if (userInputNumberForSearch == book.Year)
-                        {
-                            Console.WriteLine($"Id: {book.Id}, Название: {book.Title}, Автор: {book.Author}, Жанр: {book.Genre}, Год: {book.Year}");
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-
-                    Console.ReadKey();
-                }
-                else
-                {
-                    Console.WriteLine("Ошибка, нужно ввести число.");
-                }
+                ShowByYear(userInputForSearch);
             }
         }
     }
 
     class Reader
     {
-        private int _lastId = 1;
-
-        public string Name { get; private set; }
+        public string Name { get; private set; } 
         
         public Reader(string name)
         {
             Name = name;
         }
 
-        public void AddBook(Storage storage)
+        public void SetName()
         {
-            int id = ++_lastId;
-            string? title;
-            string? author;
-            string? genre;
-            int year;
-
-            Console.WriteLine("Введите название книги: ");
-            title = Console.ReadLine();
-            Console.WriteLine("Введите автора: ");
-            author = Console.ReadLine();
-            Console.WriteLine("Введите жанр: ");
-            genre = Console.ReadLine();
-            Console.WriteLine("Введите год выхода книги: ");
-            year = Convert.ToInt32(Console.ReadLine());
-
-            storage._books.Add(new Books(id, title, author, genre, year));
+            Name = Console.ReadLine();
         }
     }
 }
