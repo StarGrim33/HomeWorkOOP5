@@ -13,3 +13,18 @@ C:\Users\Влад и Аня\source\repos\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net
 C:\Users\Влад и Аня\source\repos\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.pdb
 C:\Users\Влад и Аня\source\repos\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.genruntimeconfig.cache
 C:\Users\Влад и Аня\source\repos\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\ref\HomeWorkOOP5.dll
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\bin\Debug\net6.0\HomeWorkOOP5.exe
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\bin\Debug\net6.0\HomeWorkOOP5.deps.json
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\bin\Debug\net6.0\HomeWorkOOP5.runtimeconfig.json
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\bin\Debug\net6.0\HomeWorkOOP5.dll
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\bin\Debug\net6.0\HomeWorkOOP5.pdb
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.csproj.AssemblyReference.cache
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.AssemblyInfoInputs.cache
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.AssemblyInfo.cs
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.csproj.CoreCompileInputs.cache
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.dll
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\refint\HomeWorkOOP5.dll
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.pdb
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\HomeWorkOOP5.genruntimeconfig.cache
+C:\Users\stargrim33\Documents\GitHub\HomeWorkOOP5\HomeWorkOOP5\obj\Debug\net6.0\ref\HomeWorkOOP5.dll
